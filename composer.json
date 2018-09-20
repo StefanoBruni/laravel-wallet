@@ -1,17 +1,23 @@
 {
-    "name": "depsimon/laravel-wallet",
+    "name": "StefanoBruni/laravel-wallet",
     "description": "Easy to use virtual wallet for your app",
     "keywords": [
-        "depsimon",
+        "stefanobruni",
         "laravel-wallet",
         "virtual",
         "currency",
         "credits",
         "wallet"
     ],
-    "homepage": "https://github.com/depsimon/laravel-wallet",
+    "homepage": "https://github.com/StefanoBruni/laravel-wallet",
     "license": "MIT",
     "authors": [
+         {
+            "name": "Stefano Bruni",
+            "email": "stefano.bruni87@gmail.com",
+            "homepage": "",
+            "role": "Developer"
+        },
         {
             "name": "Simon Depelchin",
             "email": "simon@webartisan.be",
@@ -20,17 +26,17 @@
         }
     ],
     "require": {
-        "php": "^7.0",
-        "illuminate/database": "~5.6"
+        "php": ">=5.6.4",
+        "illuminate/database": "~5.4"
     },
     "autoload": {
         "psr-4": {
-            "Depsimon\\Wallet\\": "src"
+            "StefanoBruni\\Wallet\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Depsimon\\Wallet\\Tests\\": "tests"
+            "StefanoBruni\\Wallet\\Tests\\": "tests"
         }
     },
     "config": {
@@ -39,10 +45,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Depsimon\\Wallet\\WalletServiceProvider"
+                "StefanoBruni\\Wallet\\WalletServiceProvider"
             ],
             "aliases": {
-                "Wallet": "Depsimon\\Wallet\\WalletFacade"
+                "Wallet": "StefanoBruni\\Wallet\\WalletFacade"
             }
         }
     }
