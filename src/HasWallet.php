@@ -46,7 +46,12 @@ trait HasWallet
      */
     public function deposit($amount, $type = 'deposit', $meta = [], $accepted = true)
     {
-        if ($accepted) {
+	    if ($type == "crmcredits") {
+
+		    $this->wallet->crmcredits = $amount;
+		    $this->wallet->balance = $amount + $this->actualBalance(false);
+		    $this->wallet->save();
+	    } elseif ($accepted) {
             $this->wallet->balance += $amount;
             $this->wallet->save();
         } elseif (! $this->wallet->exists) {
@@ -119,8 +124,19 @@ trait HasWallet
      * Might be different from the balance property if the database is manipulated
      * @return float balance
      */
-    public function actualBalance()
+    public function actualBalance($withCrmCredits = false)
     {
+	    $crmCredits = 0;
+
+    	if($withCrmCredits)
+	    {
+		    $crmWallet = $this->wallet->transactions()
+			    ->whereIn('type', ['crmcredits'])
+			    ->where('accepted', 1)
+			    ->orderBy('id','desc')->first();
+		    $crmCredits = isset($crmWallet->amount) ? $crmWallet->amount : 0;
+	    }
+
         $credits = $this->wallet->transactions()
             ->whereIn('type', ['deposit', 'refund'])
             ->where('accepted', 1)
@@ -131,6 +147,6 @@ trait HasWallet
             ->where('accepted', 1)
             ->sum('amount');
 
-        return $credits - $debits;
+        return $crmCredits + $credits - $debits;
     }
 }

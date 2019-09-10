@@ -9,9 +9,12 @@ class WalletServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+	public function register()
     {
-        if ($this->app->runningInConsole()) {
+	    $config = __DIR__ . '/../config/cart.php';
+
+	    $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'wallet');
+
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('wallet.php'),
             ], 'config');
@@ -19,14 +22,7 @@ class WalletServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../resources/migrations/' => database_path('migrations'),
             ], 'migrations');
-        }
-    }
 
-    /**
-     * Register the application services.
-     */
-    public function register()
-    {
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'wallet');
+
     }
 }
