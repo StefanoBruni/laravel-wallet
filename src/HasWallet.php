@@ -51,7 +51,13 @@ trait HasWallet
 		    $this->wallet->crmcredits = $amount;
 		    $this->wallet->balance = $amount + $this->actualBalance(false);
 		    $this->wallet->save();
-	    } elseif ($accepted) {
+	    } 
+	else if ($type == "academycredits") {
+            $this->wallet->academycredits = $amount;
+            $this->wallet->balance = $amount + $this->actualBalance(false) + $this->wallet->crmcredits  ;
+            $this->wallet->save();
+        }
+	elseif ($accepted) {
             $this->wallet->balance += $amount;
             $this->wallet->save();
         } elseif (! $this->wallet->exists) {
